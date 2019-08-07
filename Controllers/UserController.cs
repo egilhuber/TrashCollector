@@ -21,10 +21,6 @@ namespace TrashCollector.Controllers
                 ViewBag.Name = user.Name;
 
                 ViewBag.displayMenu = "No";
-                if (IsAdminUser())
-                {
-                    ViewBag.displayMenu = "Yes";
-                }
                 return View();
             }
             else
@@ -34,28 +30,6 @@ namespace TrashCollector.Controllers
             return View();
         }
 
-        public bool IsAdminUser()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = User.Identity;
-                ApplicationDbContext context = new ApplicationDbContext();
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var s = UserManager.GetRoles(user.GetUserId());
-                if (s[0].ToString() == "Admin")
-                {
-                    return true;
-
-                }
-                else
-                {
-                    return false;
-
-                }
-
-            }
-            return false;
-        }
 
 
     }

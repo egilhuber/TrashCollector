@@ -16,10 +16,7 @@ namespace TrashCollector.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (!IsAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+
             }
             else
             {
@@ -28,28 +25,6 @@ namespace TrashCollector.Controllers
             ApplicationDbContext context = new ApplicationDbContext();
             var Roles = context.Roles.ToList();
             return View(Roles);
-        }
-        public bool IsAdminUser()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = User.Identity;
-                ApplicationDbContext context = new ApplicationDbContext();
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var s = UserManager.GetRoles(user.GetUserId());
-                if (s[0].ToString() == "Admin")
-                {
-                    return true;
-
-                }
-                else
-                {
-                    return false;
-
-                }
-
-            }
-            return false;
         }
     }
 }
