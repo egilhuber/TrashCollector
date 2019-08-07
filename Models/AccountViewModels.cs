@@ -49,9 +49,9 @@ namespace TrashCollector.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "UserName")]
+
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +64,15 @@ namespace TrashCollector.Models
 
     public class RegisterViewModel
     {
+
+        [Required]
+        [Display(Name = "User Roles")]
+        public string UserRoles { get; set; }
+
+        [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -79,6 +88,7 @@ namespace TrashCollector.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -100,6 +110,8 @@ namespace TrashCollector.Models
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
+
+
     }
 
     public class ForgotPasswordViewModel
