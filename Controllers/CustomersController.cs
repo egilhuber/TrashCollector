@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrashCollector.Models;
+using System.Security.Claims;
 
 namespace TrashCollector.Controllers
 {
@@ -21,14 +23,18 @@ namespace TrashCollector.Controllers
         }
 
         // GET: Customers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Customer cust)
         {
-            if (id == null)
+            //var id = User.Identity.GetUserId();
+            ////select * from customers where applicationid = id
+            
+
+            if (cust == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            Customer customer = db.Customers.Find(cust.Id);
+            if (cust == null)
             {
                 return HttpNotFound();
             }
@@ -46,13 +52,16 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email,Password,UserName,StreetAddress,City,State,ZipCode,PickupDay,StartSuspend,EndSuspend,Balance")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email,Password,UserName,StreetAddress,City,State,ZipCode,PickupDay,StartSuspend,EndSuspend,Balance,Role")] Customer customer)
         {
+            
             if (ModelState.IsValid)
             {
+                customer.Role = "Customer";
+                customer.ApplicationId = User.Identity.GetUserId();
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", (customer));
             }
 
             return View(customer);

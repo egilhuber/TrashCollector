@@ -190,6 +190,18 @@
     <Compile Include="Migrations\201908071447302_ThirdMigrationV3.Designer.cs">
       <DependentUpon>201908071447302_ThirdMigrationV3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908081259244_FourthMigration.cs" />
+    <Compile Include="Migrations\201908081259244_FourthMigration.Designer.cs">
+      <DependentUpon>201908081259244_FourthMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908081404501_FifthMigration.cs" />
+    <Compile Include="Migrations\201908081404501_FifthMigration.Designer.cs">
+      <DependentUpon>201908081404501_FifthMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908081415416_SixthMigration.cs" />
+    <Compile Include="Migrations\201908081415416_SixthMigration.Designer.cs">
+      <DependentUpon>201908081415416_SixthMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -267,6 +279,8 @@
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Role\AddRole.cshtml" />
+    <Content Include="Views\Shared\_LayoutCustomer.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +307,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908071447302_ThirdMigrationV3.resx">
       <DependentUpon>201908071447302_ThirdMigrationV3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908081259244_FourthMigration.resx">
+      <DependentUpon>201908081259244_FourthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908081404501_FifthMigration.resx">
+      <DependentUpon>201908081404501_FifthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908081415416_SixthMigration.resx">
+      <DependentUpon>201908081415416_SixthMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
