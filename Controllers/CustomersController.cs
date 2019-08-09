@@ -27,8 +27,12 @@ namespace TrashCollector.Controllers
         {
             //var id = User.Identity.GetUserId();
             ////select * from customers where applicationid = id
-            
-
+            if (cust.ApplicationId == null)
+            {
+                cust.ApplicationId = User.Identity.GetUserId();
+                Customer customer1 = db.Customers.Find(cust.ApplicationId); //need to search the customer id table
+                cust = customer1;
+            }
             if (cust == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -61,7 +65,7 @@ namespace TrashCollector.Controllers
                 customer.ApplicationId = User.Identity.GetUserId();
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Details", (customer));
+                return RedirectToAction("Details", (customer));//somehow add this to the navbar to make the details link work
             }
 
             return View(customer);

@@ -155,11 +155,11 @@ namespace TrashCollector.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model) /*[Bind(Include = "Id,Email,UserName,UserRoles,Password,ConfirmPassword")] */
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email  };//need to bind data here
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -180,11 +180,11 @@ namespace TrashCollector.Controllers
 
                     if (model.UserRoles == "Customer" || model.UserRoles == "customer")
                     {
-                        return RedirectToAction("Create", "Customers");
+                        return RedirectToAction("Create", "Customers", model); 
                     }
                     else if (model.UserRoles == "Employee" || model.UserRoles == "Employee")
                     {
-                        return RedirectToAction("Create", "Employees");
+                        return RedirectToAction("Create", "Employees", model);
                     }
                     else
                     {
