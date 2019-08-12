@@ -30,19 +30,20 @@ namespace TrashCollector.Controllers
             if (cust.ApplicationId == null)
             {
                 cust.ApplicationId = User.Identity.GetUserId();
-                Customer customer1 = db.Customers.Find(cust.ApplicationId); //need to search the customer id table
+                
+                Customer customer1 = db.Customers.Find(cust.ApplicationId); //need to search the customer id table - nope that's gonna be a whole thing that will break stuff just find a different way 
                 cust = customer1;
             }
             if (cust == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(cust.Id);
+            //Customer customer = db.Customers.Find(cust.Id);
             if (cust == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(cust);
         }
 
         // GET: Customers/Create

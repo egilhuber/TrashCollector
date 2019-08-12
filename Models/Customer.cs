@@ -9,7 +9,7 @@ namespace TrashCollector.Models
 {
     public class Customer
     {
-        [Key]
+        
         //[ForeignKey("Id")]
         public int Id { get; set; }
 
@@ -52,6 +52,7 @@ namespace TrashCollector.Models
         [Display(Name = "Balance")]
         public double Balance { get; set; }
 
+        [Key]
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

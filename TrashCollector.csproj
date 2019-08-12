@@ -202,6 +202,14 @@
     <Compile Include="Migrations\201908081415416_SixthMigration.Designer.cs">
       <DependentUpon>201908081415416_SixthMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908121442348_SeventhMigration.cs" />
+    <Compile Include="Migrations\201908121442348_SeventhMigration.Designer.cs">
+      <DependentUpon>201908121442348_SeventhMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121453380_EighthMigration.cs" />
+    <Compile Include="Migrations\201908121453380_EighthMigration.Designer.cs">
+      <DependentUpon>201908121453380_EighthMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -316,6 +324,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908081415416_SixthMigration.resx">
       <DependentUpon>201908081415416_SixthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121442348_SeventhMigration.resx">
+      <DependentUpon>201908121442348_SeventhMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121453380_EighthMigration.resx">
+      <DependentUpon>201908121453380_EighthMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
