@@ -18,18 +18,18 @@ namespace TrashCollector.Controllers
         // GET: Employees
         public ActionResult Index(Employee emp, string sortOrder)
         {
-            
-            
-            //if (emp.ApplicationId == null)
-            //{
-            //    emp.ApplicationId = User.Identity.GetUserId();
-            //    Employee employee = db.Employees.Find(emp.ApplicationId);
-            //    emp = employee;
-            //}
-            //if (emp == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+
+
+            if (emp.ApplicationId == null)
+            {
+                emp.ApplicationId = User.Identity.GetUserId();
+                Employee employee = db.Employees.Find(emp.ApplicationId);
+                emp = employee;
+            }
+            if (emp == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             //List<Customer> custList = new List<Customer>();
 
             //var cust = (from c in db.Customers
@@ -51,6 +51,7 @@ namespace TrashCollector.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var customers = from c in db.Customers
+                            where c.ZipCode == emp.ZipCode
                            select c;
             switch (sortOrder)
             {
@@ -203,9 +204,9 @@ namespace TrashCollector.Controllers
             customer1.Balance += 10;
             db.Entry(customer1).State = EntityState.Modified;
             var transaction = db.Database.BeginTransaction();
-            db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers ON;");
+            db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Customers ON;");
             db.SaveChanges();
-            db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers OFF;");
+            db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.Customers OFF;");
             transaction.Commit();
             return RedirectToAction("Index");
         }

@@ -12,7 +12,7 @@ namespace TrashCollector.Controllers
         {
             if (this.User.IsInRole("8fa092f5-e95e-41d7-9b5e-cdad3cb51600") || this.User.IsInRole("Customer"))
             {
-                return RedirectToAction("Details", "Details", "Customers");
+                return RedirectToAction("Details", "Customers");
             }
             else if (this.User.IsInRole("c2752e08-c8a5-4b91-9f77-16cb3a1d8183") || this.User.IsInRole("Employee"))
             {

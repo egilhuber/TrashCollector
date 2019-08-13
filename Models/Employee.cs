@@ -9,8 +9,9 @@ namespace TrashCollector.Models
 {
     public class Employee
     {
-        
+
         //[ForeignKey("Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Display(Name = "First Name")]
