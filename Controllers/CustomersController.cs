@@ -67,10 +67,10 @@ namespace TrashCollector.Controllers
                 var transaction = db.Database.BeginTransaction();
                 customer.Role = "Customer";
                 customer.ApplicationId = User.Identity.GetUserId();
+                //db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers ON;");
                 db.Customers.Add(customer);
-                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers ON;");
                 db.SaveChanges();
-                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers OFF;");
+                //db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers OFF;");
                 transaction.Commit();
                 return RedirectToAction("Details", (customer));
             }

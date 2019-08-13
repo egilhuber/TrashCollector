@@ -107,13 +107,13 @@ namespace TrashCollector.Controllers
         {
             if (ModelState.IsValid)
             {
+                var transaction = db.Database.BeginTransaction();
                 employee.Role = "Employee";
                 employee.ApplicationId = User.Identity.GetUserId();
+                //db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees ON;");
                 db.Employees.Add(employee);
-                var transaction = db.Database.BeginTransaction();
-                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees ON;");
                 db.SaveChanges();
-                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees OFF;");
+                //db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees OFF;");
                 transaction.Commit();
                 return RedirectToAction("Details", employee);
             }
