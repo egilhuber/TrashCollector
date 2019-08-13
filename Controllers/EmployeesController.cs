@@ -16,27 +16,57 @@ namespace TrashCollector.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Employees
-        public ActionResult Index(Employee emp)
+        public ActionResult Index(Employee emp, string sortOrder)
         {
             
-            //instead of this returning the view with a list of employees, have it return the view with a list of customers in zip (do a query for that)
-            if (emp.ApplicationId == null)
-            {
-                emp.ApplicationId = User.Identity.GetUserId();
-                Employee employee = db.Employees.Find(emp.ApplicationId);
-                emp = employee;
-            }
-            if (emp == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            List<Customer> custList = new List<Customer>();
+            
+            //if (emp.ApplicationId == null)
+            //{
+            //    emp.ApplicationId = User.Identity.GetUserId();
+            //    Employee employee = db.Employees.Find(emp.ApplicationId);
+            //    emp = employee;
+            //}
+            //if (emp == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //List<Customer> custList = new List<Customer>();
 
-            var cust = (from c in db.Customers
-                        where c.ZipCode == emp.ZipCode
-                        select c).ToList();
+            //var cust = (from c in db.Customers
+            //            where c.ZipCode == emp.ZipCode
+            //            select c).ToList();
 
-            return View(cust);
+            //return View(cust);
+
+
+
+
+
+
+
+
+
+
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var customers = from c in db.Customers
+                           select c;
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    customers = customers.OrderByDescending(c => c.PickupDay);
+                    break;
+                default:
+                    customers = customers.OrderBy(s => s.LastName);
+                    break;
+            }
+            return View(customers.ToList());
+
+
+
+
+
         }
 
         // GET: Employees/Details/5
@@ -165,5 +195,21 @@ namespace TrashCollector.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult Complete(string id)
+        {
+            Customer customer1 = db.Customers.Find(id);
+            customer1.Balance += 10;
+            db.Entry(customer1).State = EntityState.Modified;
+            var transaction = db.Database.BeginTransaction();
+            db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers ON;");
+            db.SaveChanges();
+            db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers OFF;");
+            transaction.Commit();
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

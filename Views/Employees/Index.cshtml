@@ -8,7 +8,9 @@
 
 @*employee index page*@
 
-
+<p>
+    
+</p>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -24,26 +26,47 @@
             @Html.DisplayNameFor(model => model.StreetAddress)
         </th>
         <th>
+            @Html.ActionLink("Pickup Day", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+
+        <th>
             @Html.DisplayNameFor(model => model.ZipCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Balance)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StreetAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ZipCode)
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StreetAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PickupDay)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ZipCode)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Balance)
+    </td>
+    <td>
+
+        @Html.ActionLink("Complete", "Complete", new { id=item.ApplicationId })
+
+        @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+    </td>
+</tr>
 }
 
 </table>
