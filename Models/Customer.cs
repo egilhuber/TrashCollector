@@ -59,5 +59,7 @@ namespace TrashCollector.Models
 
         public string Role { get; set; }
 
+        [Display(Name = "Pickup Date")]
+        public string PickupDate { get; set; }
     }
 }

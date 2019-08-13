@@ -23,7 +23,7 @@ namespace TrashCollector
 
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            //creating manager role
+            //creating customer role
             if (!RoleManager.RoleExists("Customer"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();

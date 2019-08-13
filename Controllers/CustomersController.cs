@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using TrashCollector.Models;
 using System.Security.Claims;
 
+
 namespace TrashCollector.Controllers
 {
     public class CustomersController : Controller
@@ -31,7 +32,7 @@ namespace TrashCollector.Controllers
             {
                 cust.ApplicationId = User.Identity.GetUserId();
                 
-                Customer customer1 = db.Customers.Find(cust.ApplicationId); //need to search the customer id table - nope that's gonna be a whole thing that will break stuff just find a different way 
+                Customer customer1 = db.Customers.Find(cust.ApplicationId); 
                 cust = customer1;
             }
             if (cust == null)
@@ -49,6 +50,7 @@ namespace TrashCollector.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
@@ -59,32 +61,43 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email,Password,UserName,StreetAddress,City,State,ZipCode,PickupDay,StartSuspend,EndSuspend,Balance,Role")] Customer customer)
         {
-            
+
             if (ModelState.IsValid)
             {
+                var transaction = db.Database.BeginTransaction();
                 customer.Role = "Customer";
                 customer.ApplicationId = User.Identity.GetUserId();
                 db.Customers.Add(customer);
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers ON;");
                 db.SaveChanges();
-                return RedirectToAction("Details", (customer));//somehow add this to the navbar to make the details link work
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers OFF;");
+                transaction.Commit();
+                return RedirectToAction("Details", (customer));
             }
-
             return View(customer);
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Email,Password,UserName,StreetAddress,City,State,ZipCode,PickupDay,StartSuspend,EndSuspend,Balance,AppliationId,PickupDate")]  Customer cust)
         {
-            if (id == null)
+
+            if (cust.ApplicationId == null)
+            {
+                cust.ApplicationId = User.Identity.GetUserId();
+
+                Customer customer1 = db.Customers.Find(cust.ApplicationId); 
+                cust = customer1;
+            }
+            if (cust == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            //Customer customer = db.Customers.Find(cust.Id);
+            if (cust == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(cust);
         }
 
         // POST: Customers/Edit/5
@@ -92,12 +105,17 @@ namespace TrashCollector.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Email,Password,UserName,StreetAddress,City,State,ZipCode,PickupDay,StartSuspend,EndSuspend,Balance")] Customer customer)
+        public ActionResult Edit(int? i, Customer customer)
         {
             if (ModelState.IsValid)
             {
+                
                 db.Entry(customer).State = EntityState.Modified;
+                var transaction = db.Database.BeginTransaction();
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers ON;");
                 db.SaveChanges();
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Customers OFF;");
+                transaction.Commit();
                 return RedirectToAction("Index");
             }
             return View(customer);

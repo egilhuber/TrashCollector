@@ -155,11 +155,11 @@ namespace TrashCollector.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model) /*[Bind(Include = "Id,Email,UserName,UserRoles,Password,ConfirmPassword")] */
+        public async Task<ActionResult> Register(RegisterViewModel model) 
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email  };//need to bind data here
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email  };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

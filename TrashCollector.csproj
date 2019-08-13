@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppDbContext.cs" />
     <Compile Include="Controllers\ApplicationUserManager.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -209,6 +210,30 @@
     <Compile Include="Migrations\201908121453380_EighthMigration.cs" />
     <Compile Include="Migrations\201908121453380_EighthMigration.Designer.cs">
       <DependentUpon>201908121453380_EighthMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121655530_NinthMigration.cs" />
+    <Compile Include="Migrations\201908121655530_NinthMigration.Designer.cs">
+      <DependentUpon>201908121655530_NinthMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121852033_TenthMigration.cs" />
+    <Compile Include="Migrations\201908121852033_TenthMigration.Designer.cs">
+      <DependentUpon>201908121852033_TenthMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121905072_Migration12.cs" />
+    <Compile Include="Migrations\201908121905072_Migration12.Designer.cs">
+      <DependentUpon>201908121905072_Migration12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121909132_Migration13.cs" />
+    <Compile Include="Migrations\201908121909132_Migration13.Designer.cs">
+      <DependentUpon>201908121909132_Migration13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121921504_Migration14.cs" />
+    <Compile Include="Migrations\201908121921504_Migration14.Designer.cs">
+      <DependentUpon>201908121921504_Migration14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908122008371_Migration15.cs" />
+    <Compile Include="Migrations\201908122008371_Migration15.Designer.cs">
+      <DependentUpon>201908122008371_Migration15.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -330,6 +355,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908121453380_EighthMigration.resx">
       <DependentUpon>201908121453380_EighthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121655530_NinthMigration.resx">
+      <DependentUpon>201908121655530_NinthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121852033_TenthMigration.resx">
+      <DependentUpon>201908121852033_TenthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121905072_Migration12.resx">
+      <DependentUpon>201908121905072_Migration12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121909132_Migration13.resx">
+      <DependentUpon>201908121909132_Migration13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121921504_Migration14.resx">
+      <DependentUpon>201908121921504_Migration14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908122008371_Migration15.resx">
+      <DependentUpon>201908122008371_Migration15.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

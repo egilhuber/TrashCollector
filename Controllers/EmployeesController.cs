@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,24 +16,49 @@ namespace TrashCollector.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Employees
-        public ActionResult Index()
+        public ActionResult Index(Employee emp)
         {
-            return View(db.Employees.ToList());
-        }
-
-        // GET: Employees/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
+            
+            //instead of this returning the view with a list of employees, have it return the view with a list of customers in zip (do a query for that)
+            if (emp.ApplicationId == null)
+            {
+                emp.ApplicationId = User.Identity.GetUserId();
+                Employee employee = db.Employees.Find(emp.ApplicationId);
+                emp = employee;
+            }
+            if (emp == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            List<Customer> custList = new List<Customer>();
+
+            var cust = (from c in db.Customers
+                        where c.ZipCode == emp.ZipCode
+                        select c).ToList();
+
+            return View(cust);
+        }
+
+        // GET: Employees/Details/5
+        public ActionResult Details(Employee emp)
+        {
+
+            if (emp.ApplicationId == null)
+            {
+                emp.ApplicationId = User.Identity.GetUserId();
+                Employee employee = db.Employees.Find(emp.ApplicationId);
+                emp = employee;
+            }
+            if (emp == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (emp == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(emp);
         }
 
         // GET: Employees/Create
@@ -50,27 +76,39 @@ namespace TrashCollector.Controllers
         {
             if (ModelState.IsValid)
             {
+                employee.Role = "Employee";
+                employee.ApplicationId = User.Identity.GetUserId();
                 db.Employees.Add(employee);
+                var transaction = db.Database.BeginTransaction();
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees ON;");
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees OFF;");
+                transaction.Commit();
+                return RedirectToAction("Details", employee);
             }
 
             return View(employee);
         }
 
         // GET: Employees/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, Employee emp)
         {
-            if (id == null)
+            if (emp.ApplicationId == null)
+            {
+                emp.ApplicationId = User.Identity.GetUserId();
+
+                Employee employee = db.Employees.Find(emp.ApplicationId);
+                emp = employee;
+            }
+            if (emp == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            if (emp == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(emp);
         }
 
         // POST: Employees/Edit/5
@@ -83,7 +121,11 @@ namespace TrashCollector.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
+                var transaction = db.Database.BeginTransaction();
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees ON;");
                 db.SaveChanges();
+                db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Employees OFF;");
+                transaction.Commit();
                 return RedirectToAction("Index");
             }
             return View(employee);

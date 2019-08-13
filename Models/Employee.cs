@@ -9,7 +9,7 @@ namespace TrashCollector.Models
 {
     public class Employee
     {
-        [Key]
+        
         //[ForeignKey("Id")]
         public int Id { get; set; }
 
@@ -31,6 +31,7 @@ namespace TrashCollector.Models
         [Display(Name = "Territory")]
         public int ZipCode { get; set; }
 
+        [Key]
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
