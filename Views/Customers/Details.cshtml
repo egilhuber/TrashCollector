@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    string address = (string)ViewData["Address"];
 }
 
 <h2>Details</h2>
@@ -117,6 +118,22 @@
 
     </dl>
 </div>
+
+
+@{
+    string embeddedmapsURL;
+    embeddedmapsURL = @"https://www.google.com/maps/embed/v1/place?key=" + TrashCollector.ApiKeys.ApiKey.mapsKey + "&q=" + address;
+}
+
+<iframe width="600"
+        height="450"
+        frameborder="0" style="border:0"
+        src=@embeddedmapsURL allowfullscreen>
+</iframe>
+
+
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

@@ -52,7 +52,7 @@ namespace TrashCollector.Controllers
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var customers = from c in db.Customers
                             where c.ZipCode == emp.ZipCode
-                           select c;
+                            select c;
             switch (sortOrder)
             {
                 case "date_desc":

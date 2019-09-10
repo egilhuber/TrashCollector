@@ -28,6 +28,7 @@ namespace TrashCollector.Controllers
         {
             //var id = User.Identity.GetUserId();
             ////select * from customers where applicationid = id
+            string customerAddress = $"{cust.StreetAddress} + {cust.City} + {cust.State} + {cust.ZipCode}";
             if (cust.ApplicationId == null)
             {
                 cust.ApplicationId = User.Identity.GetUserId();
@@ -44,6 +45,7 @@ namespace TrashCollector.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["Address"] = customerAddress;
             return View(cust);
         }
 
